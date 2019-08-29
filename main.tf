@@ -39,6 +39,7 @@ resource "google_compute_instance" "nomad_instance" {
   tags = [var.instance_role]
 
   metadata_startup_script = templatefile("./templates/configuration.tmpl", { instance_role = var.instance_role, nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.domain_name, zone_name = var.zone_name })
+
 }
 
 # Allow SSH
