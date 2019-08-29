@@ -81,7 +81,3 @@ variable "udp_ports_nomad" {
   type        = list(string)
   default     = ["4648"]
 }
-
-# variable "startup_script" {
-#   type = string
-# }
