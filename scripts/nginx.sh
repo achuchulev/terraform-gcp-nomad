@@ -20,9 +20,9 @@ server {
     location / {
         proxy_pass https://nomad_backend;
         proxy_ssl_verify on;
-        proxy_ssl_trusted_certificate /home/ubuntu/nomad/ssl/nomad-ca.pem;
-        proxy_ssl_certificate /home/ubuntu/nomad/ssl/cli.pem;
-        proxy_ssl_certificate_key /home/ubuntu/nomad/ssl/cli-key.pem;
+        proxy_ssl_trusted_certificate /root/nomad/ssl/nomad-ca.pem;
+        proxy_ssl_certificate /root/nomad/ssl/cli.pem;
+        proxy_ssl_certificate_key /root/nomad/ssl/cli-key.pem;
         proxy_ssl_name server.$1.nomad; 
     }
 }
