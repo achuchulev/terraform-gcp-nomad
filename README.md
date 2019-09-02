@@ -53,8 +53,8 @@ variable "subdomain_name" {}
 | gcp_credentials_file_path | Locate the GCP credentials .json file. | string  | - | yes
 | gcp_project_id | GCP Project ID. | string  | - | yes
 | gcp_region | GCP region | string  | us-east4 | yes
-| gcp-vpc-network | VPC network CIDR block | string  | - | yes
-| gcp_subnet_cidr | VPC subnet CIDR block | string  | - | yes
+| gcp_vpc_network | The name of VPC network | string  | - | yes
+| gcp_subnet_name | The name of VPC subnet | string  | - | yes
 | gcp_instance_type_server | Server instance Machine Type | string  | `n1-standard-1` | no
 | gcp_instance_type_client | Client instance Machine Type | string   | `n1-standard-1` | no
 | gcp_disk_image_server | Boot disk for `gcp_instance_type_server` | string  | yes | no
