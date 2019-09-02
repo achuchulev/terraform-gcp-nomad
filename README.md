@@ -7,6 +7,8 @@
 - GCP subscription
 - Claudflare subscription
 - own domain managed by Claudflare
+- an ssh key
+- pre-built nomad server, client and frontend images on GCP or bake your own using [Packer](https://www.packer.io)
 - subnet that has one of below:
   - "private_ip_google_access" enabled
   - Cloud NAT
