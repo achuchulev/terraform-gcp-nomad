@@ -13,9 +13,9 @@ variable "gcp_region" {
   default     = "us-east4"
 }
 
-variable "gcp-vpc-network" {}
+variable "gcp_vpc_network" {}
 
-variable "gcp-subnet-name" {}
+variable "gcp_subnet_name" {}
 
 variable "gcp_instance_type_server" {
   description = "Machine Type"
