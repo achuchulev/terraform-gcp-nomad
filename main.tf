@@ -15,6 +15,7 @@ resource "google_compute_instance" "nomad_server" {
   name         = "${random_pet.random_name.id}-server-0${count.index + 1}"
   machine_type = var.gcp_instance_type_server
   zone         = data.google_compute_zones.available.names[0]
+  tags         = ["server"]
 
   boot_disk {
     initialize_params {
@@ -26,20 +27,15 @@ resource "google_compute_instance" "nomad_server" {
     subnetwork = var.gcp-subnet1-name
   }
 
-  metadata = {
-    sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
-  }
-
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
 
-  allow_stopping_for_update = true
-
-  tags = ["server"]
+  metadata = {
+    sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
+  }
 
   metadata_startup_script = templatefile("./templates/nomad-config.tmpl", { instance_role = "server", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.domain_name, zone_name = var.zone_name })
-
 }
 
 // Create Nomad client instances
@@ -48,6 +44,7 @@ resource "google_compute_instance" "nomad_client" {
   name         = "${random_pet.random_name.id}-client-0${count.index + 1}"
   machine_type = var.gcp_instance_type_client
   zone         = data.google_compute_zones.available.names[0]
+  tags         = ["client"]
 
   boot_disk {
     initialize_params {
@@ -59,27 +56,23 @@ resource "google_compute_instance" "nomad_client" {
     subnetwork = var.gcp-subnet1-name
   }
 
-  metadata = {
-    sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
-  }
-
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
 
-  allow_stopping_for_update = true
-
-  tags = ["client"]
+  metadata = {
+    sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
+  }
 
   metadata_startup_script = templatefile("./templates/nomad-config.tmpl", { instance_role = "client", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.domain_name, zone_name = var.zone_name })
-
 }
 
 // Allow SSH
 resource "google_compute_firewall" "gcp-allow-nomad-traffic" {
-  count   = var.ssh_enabled == "true" ? 1 : 0
-  name    = "${var.gcp-vpc-network}-gcp-allow-nomad-traffic"
-  network = var.gcp-vpc-network
+  count       = var.ssh_enabled == "true" ? 1 : 0
+  name        = "${var.gcp-vpc-network}-gcp-allow-nomad-traffic"
+  network     = var.gcp-vpc-network
+  source_tags = ["server", "client"]
 
   allow {
     protocol = "tcp"
@@ -94,8 +87,6 @@ resource "google_compute_firewall" "gcp-allow-nomad-traffic" {
   source_ranges = [
     "0.0.0.0/0",
   ]
-
-  source_tags = ["server", "client"]
 }
 
 // Frontend config
@@ -112,6 +103,7 @@ resource "google_compute_instance" "frontend_server" {
   name         = "${var.gcp_region}-${var.dc}-${random_pet.random_name.id}-frontend"
   machine_type = var.gcp_instance_type_frontend
   zone         = data.google_compute_zones.available.names[0]
+  tags         = ["nomad-frontend"]
 
   boot_disk {
     initialize_params {
@@ -130,8 +122,6 @@ resource "google_compute_instance" "frontend_server" {
   metadata = {
     sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
   }
-
-  tags = ["nomad-frontend"]
 
   metadata_startup_script = templatefile("./templates/nginx-config.tmpl", { nomad_region = var.nomad_region })
 }
@@ -182,7 +172,6 @@ resource "cloudflare_record" "nomad_frontend" {
 
 // Generates a trusted certificate issued by Let's Encrypt
 resource "null_resource" "certbot" {
-
   count = var.ui_enabled == "true" ? 1 : 0
 
   # Changes to any instance of the cluster requires re-provisioning
@@ -212,9 +201,10 @@ resource "null_resource" "certbot" {
 }
 
 resource "google_compute_firewall" "gcp-allow-http-https-traffic" {
-  count   = var.ui_enabled == "true" ? 1 : 0
-  name    = "${var.gcp-vpc-network}-gcp-allow-http-https-traffic"
-  network = var.gcp-vpc-network
+  count       = var.ui_enabled == "true" ? 1 : 0
+  name        = "${var.gcp-vpc-network}-gcp-allow-http-https-traffic"
+  network     = var.gcp-vpc-network
+  source_tags = ["nomad-frontend"]
 
   allow {
     protocol = "tcp"
@@ -224,7 +214,4 @@ resource "google_compute_firewall" "gcp-allow-http-https-traffic" {
   source_ranges = [
     "0.0.0.0/0",
   ]
-
-  source_tags = ["nomad-frontend"]
-
 }
