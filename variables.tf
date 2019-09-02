@@ -69,16 +69,6 @@ variable "secure_gossip" {
   default     = "null"
 }
 
-variable "zone_name" {
-  description = "The name of DNS domain"
-  default     = "ntry.site"
-}
-
-variable "domain_name" {
-  description = "The name of subdomain"
-  default     = "mynomad"
-}
-
 variable "tcp_ports_nomad" {
   description = "Specifies the network ports used for different services required by the Nomad agent"
   type        = list(string)
@@ -133,7 +123,3 @@ variable "subdomain_name" {
   default     = "null"
 }
 
-variable "backend_private_ips" {
-  description = "Used by Nomad frontend"
-  default     = "null"
-}
