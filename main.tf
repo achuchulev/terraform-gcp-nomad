@@ -67,7 +67,7 @@ resource "google_compute_instance" "nomad_client" {
   metadata_startup_script = templatefile("${path.module}/templates/nomad-config.tmpl", { instance_role = "client", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.subdomain_name, zone_name = var.cloudflare_zone })
 }
 
-// Allow SSH
+// Allow Nomad Traffic
 resource "google_compute_firewall" "allow-nomad-traffic" {
   name        = "${random_pet.random_name.id}-allow-nomad-traffic"
   network     = var.gcp_vpc_network
@@ -186,7 +186,7 @@ resource "cloudflare_record" "nomad_frontend" {
   ttl    = 3600
 }
 
-// Generates a trusted certificate issued by Let's Encrypt
+// Generates a trusted certificate issued by Lets Encrypt
 resource "null_resource" "certbot" {
   count = var.ui_enabled == "true" ? 1 : 0
 
