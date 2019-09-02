@@ -87,15 +87,32 @@ resource "google_compute_firewall" "allow-nomad-traffic" {
     "0.0.0.0/0",
   ]
 }
-  
-  // Allow SSH
+
+// Allow SSH
 resource "google_compute_firewall" "allow-ssh-traffic" {
   count       = var.ssh_enabled == "true" ? 1 : 0
   name        = "${random_pet.random_name.id}-allow-ssh-traffic"
   network     = var.gcp_vpc_network
-  source_tags = ["server", "client"]
+  source_tags = ["server", "client", "nomad-frontend"]
 
   allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = [
+    "0.0.0.0/0",
+  ]
+}
+
+// Explicit Deny SSH
+resource "google_compute_firewall" "deny-ssh-traffic" {
+  count       = var.ssh_enabled == "false" ? 1 : 0
+  name        = "${random_pet.random_name.id}-deny-ssh-traffic"
+  network     = var.gcp_vpc_network
+  source_tags = ["server", "client", "nomad-frontend"]
+
+  deny {
     protocol = "tcp"
     ports    = ["22"]
   }
