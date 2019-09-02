@@ -17,27 +17,36 @@ variable "gcp-vpc-network" {}
 
 variable "gcp-subnet1-name" {}
 
-variable "gcp_instance_type" {
-  description = "Machine Type. Correlates to an network egress cap."
+variable "gcp_instance_type_server" {
+  description = "Machine Type"
   default     = "n1-standard-1"
 }
 
-variable "gcp_disk_image" {
+variable "gcp_instance_type_client" {
+  description = "Machine Type"
+  default     = "n1-standard-1"
+}
+
+variable "gcp_disk_image_server" {
   description = "Boot disk for gcp_instance_type."
   default     = "nomad-multiregion/ubuntu-1604-xenial-nomad-server-v093"
+}
+
+variable "gcp_disk_image_client" {
+  description = "Boot disk for gcp_instance_type."
+  default     = "nomad-multiregion/ubuntu-1604-xenial-nomad-client-v093"
 }
 
 variable "ssh_user" {
   default = "ubuntu"
 }
 
-variable "nomad_instance_count" {
+variable "nomad_server_count" {
   default = "3"
 }
 
-variable "instance_role" {
-  description = "Nomad instance type"
-  default     = "server"
+variable "nomad_client_count" {
+  default = "1"
 }
 
 variable "dc" {
@@ -80,4 +89,51 @@ variable "udp_ports_nomad" {
   description = "Specifies the network ports used for different services required by the Nomad agent"
   type        = list(string)
   default     = ["4648"]
+}
+
+variable "ssh_enabled" {
+  description = "Set to false to prevent ssh access any of the resources"
+  default     = "true"
+}
+
+// Frontend VARs
+
+variable "ui_enabled" {
+  description = "Set to false to prevent the frontend from creating thus accessing Nomad UI"
+  default     = "true"
+}
+
+variable "gcp_instance_type_frontend" {
+  description = "Machine Type. Correlates to an network egress cap."
+  default     = "n1-standard-1"
+}
+
+variable "gcp_disk_image_frontend" {
+  description = "Boot disk for gcp_instance_type."
+  default     = "nomad-multiregion/ubuntu-1604-xenial-nginx-v001"
+}
+
+variable "cloudflare_email" {
+  description = "Used by Nomad frontend"
+  default     = "null"
+}
+
+variable "cloudflare_token" {
+  description = "Used by Nomad frontend"
+  default     = "null"
+}
+
+variable "cloudflare_zone" {
+  description = "Used by Nomad frontend"
+  default     = "null"
+}
+
+variable "subdomain_name" {
+  description = "Used by Nomad frontend"
+  default     = "null"
+}
+
+variable "backend_private_ips" {
+  description = "Used by Nomad frontend"
+  default     = "null"
 }

@@ -11,3 +11,9 @@ provider "google" {
   region = var.gcp_region
 }
 
+# Configure the Cloudflare provider
+provider "cloudflare" {
+  email = var.cloudflare_email
+  token = var.cloudflare_token
+}
+

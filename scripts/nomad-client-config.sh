@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 cat <<EOF >/etc/nomad.d/nomad.hcl
 
 data_dir  = "/opt/nomad"
