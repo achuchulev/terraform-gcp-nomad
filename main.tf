@@ -24,7 +24,7 @@ resource "google_compute_instance" "nomad_server" {
   }
 
   network_interface {
-    subnetwork = var.gcp-subnet1-name
+    subnetwork = var.gcp-subnet-name
   }
 
   service_account {
@@ -53,7 +53,7 @@ resource "google_compute_instance" "nomad_client" {
   }
 
   network_interface {
-    subnetwork = var.gcp-subnet1-name
+    subnetwork = var.gcp-subnet-name
   }
 
   service_account {
@@ -112,7 +112,7 @@ resource "google_compute_instance" "frontend_server" {
   }
 
   network_interface {
-    subnetwork = var.gcp-subnet1-name
+    subnetwork = var.gcp-subnet-name
 
     access_config {
       # Ephemeral IP
