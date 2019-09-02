@@ -35,7 +35,7 @@ resource "google_compute_instance" "nomad_server" {
     sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
   }
 
-  metadata_startup_script = templatefile("./templates/nomad-config.tmpl", { instance_role = "server", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.domain_name, zone_name = var.zone_name })
+  metadata_startup_script = templatefile("./templates/nomad-config.tmpl", { instance_role = "server", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.subdomain_name, zone_name = var.cloudflare_zone })
 }
 
 // Create Nomad client instances
@@ -64,7 +64,7 @@ resource "google_compute_instance" "nomad_client" {
     sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
   }
 
-  metadata_startup_script = templatefile("./templates/nomad-config.tmpl", { instance_role = "client", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.domain_name, zone_name = var.zone_name })
+  metadata_startup_script = templatefile("./templates/nomad-config.tmpl", { instance_role = "client", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.subdomain_name, zone_name = var.cloudflare_zone })
 }
 
 // Allow SSH
