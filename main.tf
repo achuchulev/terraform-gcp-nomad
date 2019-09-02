@@ -97,7 +97,7 @@ resource "google_compute_firewall" "allow-ssh-traffic" {
 
   allow {
     protocol = "tcp"
-    ports    = "22"
+    ports    = ["22"]
   }
 
   source_ranges = [
