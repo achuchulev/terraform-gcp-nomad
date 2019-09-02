@@ -202,7 +202,7 @@ resource "null_resource" "certbot" {
 
 resource "google_compute_firewall" "gcp-allow-http-https-traffic" {
   count       = var.ui_enabled == "true" ? 1 : 0
-  name        = "${var.gcp-vpc-network}-gcp-allow-http-https-traffic"
+  name        = "${random_pet.random_name.id}-allow-http-https-traffic"
   network     = var.gcp-vpc-network
   source_tags = ["nomad-frontend"]
 
