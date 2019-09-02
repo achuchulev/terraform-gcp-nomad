@@ -68,9 +68,8 @@ resource "google_compute_instance" "nomad_client" {
 }
 
 // Allow SSH
-resource "google_compute_firewall" "gcp-allow-nomad-traffic" {
-  count       = var.ssh_enabled == "true" ? 1 : 0
-  name        = "${var.gcp_vpc_network}-gcp-allow-nomad-traffic"
+resource "google_compute_firewall" "allow-nomad-traffic" {
+  name        = "${random_pet.random_name.id}-allow-nomad-traffic"
   network     = var.gcp_vpc_network
   source_tags = ["server", "client"]
 
@@ -82,6 +81,23 @@ resource "google_compute_firewall" "gcp-allow-nomad-traffic" {
   allow {
     protocol = "udp"
     ports    = var.udp_ports_nomad
+  }
+
+  source_ranges = [
+    "0.0.0.0/0",
+  ]
+}
+  
+  // Allow SSH
+resource "google_compute_firewall" "allow-ssh-traffic" {
+  count       = var.ssh_enabled == "true" ? 1 : 0
+  name        = "${random_pet.random_name.id}-allow-ssh-traffic"
+  network     = var.gcp_vpc_network
+  source_tags = ["server", "client"]
+
+  allow {
+    protocol = "tcp"
+    ports    = "22"
   }
 
   source_ranges = [
