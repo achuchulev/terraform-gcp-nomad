@@ -12,8 +12,8 @@ chmod +x /root/nginx.sh
 /root/nginx.sh ${nomad_region}
 
 # download and run nomad configuration script
-curl -o /root/nginx-socket-config.sh https://raw.githubusercontent.com/achuchulev/terraform-gcp-nomad/master/scripts/nginx-socket-config.sh
-chmod +x /root/nginx-socket-config.sh
+curl -o /root/nginx-upstream-config.sh https://raw.githubusercontent.com/achuchulev/terraform-gcp-nomad/master/scripts/nginx-upstream-config.sh
+chmod +x /root/nginx-upstream-config.sh
 
 # Create cron job to check and renew public certificate on expiration
 crontab <<EOF
