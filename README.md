@@ -86,8 +86,8 @@ module "nomad_cluster_on_gcp" {
   
   gcp_credentials_file_path = var.gcp_credentials_file_path
   gcp_project_id            = var.gcp_project_id
-  gcp-vpc-network           = var.gcp_vpc_network
-  gcp-subnet-name           = var.gcp_subnet_name
+  gcp_vpc_network           = var.gcp_vpc_network
+  gcp_subnet_name           = var.gcp_subnet_name
   secure_gossip             = var.secure_gossip
   cloudflare_email          = var.cloudflare_email
   cloudflare_token          = var.cloudflare_token
