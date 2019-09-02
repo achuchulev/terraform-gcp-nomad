@@ -15,7 +15,7 @@ variable "gcp_region" {
 
 variable "gcp-vpc-network" {}
 
-variable "gcp-subnet1-name" {}
+variable "gcp-subnet-name" {}
 
 variable "gcp_instance_type_server" {
   description = "Machine Type"
