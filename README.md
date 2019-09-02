@@ -23,8 +23,8 @@
 
 gcp_credentials_file_path = "/path/to/gcloud/credentials.json"
 gcp_project_id            = "project_name"
-gcp-vpc-network           = "gcp_vpc_network_name"
-gcp-subnet-name           = "gcp_vpc_sunnet_name"
+gcp_vpc_network           = "gcp_vpc_network_name"
+gcp_subnet_name           = "gcp_vpc_sunnet_name"
 secure_gossip             = "1/+0vQt75rYWJadtpEdEtg=="
 cloudflare_email          = "me@example.com"
 cloudflare_token          = "cloudflare_token"
