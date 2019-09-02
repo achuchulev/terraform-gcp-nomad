@@ -24,7 +24,7 @@ resource "google_compute_instance" "nomad_server" {
   }
 
   network_interface {
-    subnetwork = var.gcp-subnet-name
+    subnetwork = var.gcp_subnet_name
   }
 
   service_account {
@@ -53,7 +53,7 @@ resource "google_compute_instance" "nomad_client" {
   }
 
   network_interface {
-    subnetwork = var.gcp-subnet-name
+    subnetwork = var.gcp_subnet_name
   }
 
   service_account {
@@ -70,8 +70,8 @@ resource "google_compute_instance" "nomad_client" {
 // Allow SSH
 resource "google_compute_firewall" "gcp-allow-nomad-traffic" {
   count       = var.ssh_enabled == "true" ? 1 : 0
-  name        = "${var.gcp-vpc-network}-gcp-allow-nomad-traffic"
-  network     = var.gcp-vpc-network
+  name        = "${var.gcp_vpc_network}-gcp-allow-nomad-traffic"
+  network     = var.gcp_vpc_network
   source_tags = ["server", "client"]
 
   allow {
@@ -112,7 +112,7 @@ resource "google_compute_instance" "frontend_server" {
   }
 
   network_interface {
-    subnetwork = var.gcp-subnet-name
+    subnetwork = var.gcp_subnet_name
 
     access_config {
       # Ephemeral IP
@@ -202,8 +202,8 @@ resource "null_resource" "certbot" {
 
 resource "google_compute_firewall" "gcp-allow-http-https-traffic" {
   count       = var.ui_enabled == "true" ? 1 : 0
-  name        = "${var.gcp-vpc-network}-gcp-allow-http-https-traffic"
-  network     = var.gcp-vpc-network
+  name        = "${var.gcp_vpc_network}-gcp-allow-http-https-traffic"
+  network     = var.gcp_vpc_network
   source_tags = ["nomad-frontend"]
 
   allow {
