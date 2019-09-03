@@ -1,4 +1,4 @@
-# Terraform module to deploy Nomad cluster (clients and servers) on GCP with|without Frontend for UI
+# Terraform module to deploy Nomad cluster (clients and servers) on GCP with|without Frontend for UI. Kitchen test is included
 
 ## Prerequisites
 
@@ -135,3 +135,85 @@ terraform apply
 | client_private_ips  | Private IPs of Nomad clients
 | frontend_public_ip  | Public IP of Frontend
 
+## How to test
+
+### on Mac
+
+#### Prerequisites
+
+##### Install rbenv to use ruby version 2.3.1
+
+```
+brew install rbenv
+rbenv install 2.3.1
+rbenv local 2.3.1
+rbenv versions
+```
+
+##### Add the following lines to your ~/.bash_profile:
+
+```
+eval "$(rbenv init -)"
+true
+export PATH="$HOME/.rbenv/bin:$PATH"
+```
+
+##### Reload profile: 
+
+`source ~/.bash_profile`
+
+##### Install bundler
+
+```
+gem install bundler
+bundle install
+```
+
+#### Run the test: 
+
+```
+bundle exec kitchen list
+bundle exec kitchen converge
+bundle exec kitchen verify
+bundle exec kitchen destroy
+```
+
+### on Linux
+
+#### Prerequisites
+
+```
+gem install kitchen-terraform
+```
+
+#### Run kitchen test 
+
+```
+kitchen list
+kitchen converge
+kitchen verify
+kitchen destroy
+```
+
+### Sample output
+
+```
+Target:  local://
+
+  Command: `terraform output`
+     ✔  stdout should include "client_private_ips"
+     ✔  stderr should include ""
+     ✔  exit_status should eq 0
+  Command: `terraform output`
+     ✔  stdout should include "server_private_ips"
+     ✔  stderr should include ""
+     ✔  exit_status should eq 0
+  Command: `terraform output`
+     ✔  stdout should include "frontend_public_ip"
+     ✔  stderr should include ""
+     ✔  exit_status should eq 0
+  HTTP GET on https://nomad-ui.example.com/ui/jobs
+     ✔  status should cmp == 200
+
+Test Summary: 10 successful, 0 failures, 0 skipped
+```
