@@ -9,3 +9,7 @@ output "client_private_ips" {
 output "frontend_public_ip" {
   value = google_compute_instance.frontend_server[*].network_interface[0].access_config[0].nat_ip
 }
+
+output "ui_url" {
+  value = "https://${var.subdomain_name}.${var.cloudflare_zone}"
+}
