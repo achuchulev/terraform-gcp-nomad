@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - git
-- terraform ( > 0.12 )
+- terraform ( >= 0.12 )
 - GCP subscription
 - Claudflare subscription
 - own domain managed by Claudflare
