@@ -14,7 +14,7 @@
   - Cloud NAT
 - selenium-server
 - java jdk
-- GeckoDriver
+- GeckoDriver | Chromedriver
 
 ## How to use
 
