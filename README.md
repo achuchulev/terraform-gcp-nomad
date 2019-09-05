@@ -115,7 +115,7 @@ output "frontend_public_ip" {
   value = module.nomad_cluster_on_gcp.frontend_public_ip
 }
 
-output "frontend_public_ip" {
+output "Nomad UI URL" {
   value = module.nomad_cluster_on_gcp.ui_url
 }
 ```
