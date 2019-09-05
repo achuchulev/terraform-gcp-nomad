@@ -12,6 +12,9 @@
 - subnet that has one of below:
   - "private_ip_google_access" enabled
   - Cloud NAT
+- selenium-server
+- java jdk
+- GeckoDriver
 
 ## How to use
 
@@ -120,9 +123,9 @@ output "frontend_public_ip" {
 ### Initialize terraform and plan/apply
 
 ```
-terraform init
-terraform plan
-terraform apply
+$ terraform init
+$ terraform plan
+$ terraform apply
 ```
 
 - `Terraform apply` will:
@@ -145,13 +148,26 @@ terraform apply
 
 #### Prerequisites
 
+##### Install selenium and all its dependencies
+
+```
+$ brew install selenium-server-standalone
+$ brew cask install java
+
+### for firefox
+$ brew install geckodriver 
+
+### for chrome
+$ brew cask install chromedriver 
+```
+
 ##### Install rbenv to use ruby version 2.3.1
 
 ```
-brew install rbenv
-rbenv install 2.3.1
-rbenv local 2.3.1
-rbenv versions
+$ brew install rbenv
+$ rbenv install 2.3.1
+$ rbenv local 2.3.1
+$ rbenv versions
 ```
 
 ##### Add the following lines to your ~/.bash_profile:
@@ -164,39 +180,56 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 
 ##### Reload profile: 
 
-`source ~/.bash_profile`
+`$ source ~/.bash_profile`
 
 ##### Install bundler
 
 ```
-gem install bundler
-bundle install
+$ gem install bundler
+$ bundle install
 ```
 
 #### Run the test: 
 
 ```
-bundle exec kitchen list
-bundle exec kitchen converge
-bundle exec kitchen verify
-bundle exec kitchen destroy
+$ bundle exec kitchen list
+$ bundle exec kitchen converge
+$ bundle exec kitchen verify
+$ bundle exec kitchen destroy
 ```
 
 ### on Linux
 
 #### Prerequisites
 
+##### Install selenium and all its dependencies
+
 ```
-gem install kitchen-terraform
+$ gem install kitchen-terraform
+$ gem install selenium-webdriver
+$ apt-get install default-jdk
+
+## Geckodriver
+$ wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
+$ sudo sh -c 'tar -x geckodriver -zf geckodriver-v0.23.0-linux64.tar.gz -O > /usr/bin/geckodriver'
+$ sudo chmod +x /usr/bin/geckodriver
+$ rm geckodriver-v0.23.0-linux64.tar.gz
+
+## Chromedriver
+$ wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip
+$ unzip chromedriver_linux64.zip
+$ sudo chmod +x chromedriver
+$ sudo mv chromedriver /usr/bin/
+$ rm chromedriver_linux64.zip
 ```
 
 #### Run kitchen test 
 
 ```
-kitchen list
-kitchen converge
-kitchen verify
-kitchen destroy
+$ kitchen list
+$ kitchen converge
+$ kitchen verify
+$ kitchen destroy
 ```
 
 ### Sample output
