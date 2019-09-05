@@ -154,10 +154,10 @@ $ terraform apply
 $ brew install selenium-server-standalone
 $ brew cask install java
 
-### for firefox
+### GeckoDriver for firefox
 $ brew install geckodriver 
 
-### for chrome
+### Chromedriver for chrome
 $ brew cask install chromedriver 
 ```
 
@@ -209,13 +209,13 @@ $ gem install kitchen-terraform
 $ gem install selenium-webdriver
 $ apt-get install default-jdk
 
-## Geckodriver
+## GeckoDriver for firefox
 $ wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
 $ sudo sh -c 'tar -x geckodriver -zf geckodriver-v0.23.0-linux64.tar.gz -O > /usr/bin/geckodriver'
 $ sudo chmod +x /usr/bin/geckodriver
 $ rm geckodriver-v0.23.0-linux64.tar.gz
 
-## Chromedriver
+## Chromedriver for chrome
 $ wget https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip
 $ unzip chromedriver_linux64.zip
 $ sudo chmod +x chromedriver
