@@ -115,7 +115,7 @@ output "frontend_public_ip" {
   value = module.nomad_cluster_on_gcp.frontend_public_ip
 }
 
-output "Nomad UI URL" {
+output "Nomad_UI_URL" {
   value = module.nomad_cluster_on_gcp.ui_url
 }
 ```
@@ -141,6 +141,7 @@ $ terraform apply
 | server_private_ips | Private IPs of Nomad servers
 | client_private_ips  | Private IPs of Nomad clients
 | frontend_public_ip  | Public IP of Frontend
+| Nomad_UI_URL | URL of Nomad UI
 
 ## How to test
 
