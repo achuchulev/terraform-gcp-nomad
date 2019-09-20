@@ -35,7 +35,7 @@ resource "google_compute_instance" "nomad_server" {
     sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
   }
 
-  metadata_startup_script = templatefile("${path.module}/templates/nomad-config.tmpl", { instance_role = "server", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.subdomain_name, zone_name = var.cloudflare_zone })
+  metadata_startup_script = templatefile("${path.module}/templates/nomad-config.tpl", { instance_role = "server", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.subdomain_name, zone_name = var.cloudflare_zone })
 }
 
 // Create Nomad client instances
@@ -64,7 +64,7 @@ resource "google_compute_instance" "nomad_client" {
     sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
   }
 
-  metadata_startup_script = templatefile("${path.module}/templates/nomad-config.tmpl", { instance_role = "client", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.subdomain_name, zone_name = var.cloudflare_zone })
+  metadata_startup_script = templatefile("${path.module}/templates/nomad-config.tpl", { instance_role = "client", nomad_region = var.nomad_region, dc = var.dc, authoritative_region = var.authoritative_region, gcp_project_id = var.gcp_project_id, secure_gossip = var.secure_gossip, domain_name = var.subdomain_name, zone_name = var.cloudflare_zone })
 }
 
 // Allow Nomad Traffic
@@ -156,7 +156,7 @@ resource "google_compute_instance" "frontend_server" {
     sshKeys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")} }"
   }
 
-  metadata_startup_script = templatefile("${path.module}/templates/nginx-config.tmpl", { nomad_region = var.nomad_region })
+  metadata_startup_script = templatefile("${path.module}/templates/nginx-config.tpl", { nomad_region = var.nomad_region })
 }
 
 // This makes the nginx configuration 

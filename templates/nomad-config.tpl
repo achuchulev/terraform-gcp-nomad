@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # create dir for nomad configuration
 mkdir -p /etc/nomad.d
 chmod 700 /etc/nomad.d
