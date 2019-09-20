@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # create dir for certificates and download CA certificates and cfssl.json configuration file to increase the default certificate expiration time for nomad
 mkdir -p /root/nomad/ssl
 curl -o /root/nomad/ssl/nomad-ca-key.pem https://raw.githubusercontent.com/achuchulev/terraform-gcp-nomad/master/ca_certs/nomad-ca-key.pem
